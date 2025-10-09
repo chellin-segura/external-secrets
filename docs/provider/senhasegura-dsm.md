@@ -1,26 +1,25 @@
-## senhasegura DevOps Secrets Management (DSM)
+## Segura® DevOps Secrets Management (DSM)
 
-External Secrets Operator integrates with [senhasegura](https://senhasegura.com/) [DevOps Secrets Management (DSM)](https://senhasegura.com/devops) module to sync application secrets to secrets held on the Kubernetes cluster.
+External Secrets Operator integrates with [Segura®](https://segura.security/) [DevOps Secrets Management (DSM)](https://segura.security/solutions/devops) module to sync application secrets to secrets held on the Kubernetes cluster.
 
 ---
 
 ## Authentication
 
-Authentication in senhasegura uses DevOps Secrets Management (DSM) application authorization schema
+Authentication in Segura® uses DevOps Secrets Management (DSM) application authorization schema. Instructions to setup Authorizations and Secrets in Segura® DSM can be found at [Segura docs for DSM](https://docs.senhasegura.io/docs/how-to-manage-authorizations-per-application-in-devops-secret-manager).
 
-You need to create an Kubernetes Secret with desired auth parameters, for example:
+You will need to create an Kubernetes Secret with desired auth parameters, for example:
 
-Instructions to setup authorizations and secrets in senhasegura DSM can be found at [senhasegura docs for DSM](https://helpcenter.senhasegura.io/docs/3.22/dsm) and [senhasegura YouTube channel](https://www.youtube.com/channel/UCpDms35l3tcrfb8kZSpeNYw/search?query=DSM%2C%20en-US)
 
 ```yaml
-{% include 'senhasegura-dsm-secret.yaml' %}
+{% include 'segura-dsm-secret.yaml' %}
 ```
 
 ---
 
 ## Examples
 
-To sync secrets between senhasegura and Kubernetes with External Secrets, we need to define an SecretStore or ClusterSecretStore resource with senhasegura provider, setting authentication in DSM module with Secret defined before
+To sync secrets between Segura® DSM and Kubernetes with External Secrets, you need to define a SecretStore or ClusterSecretStore resource with Segura® provider, setting up authentication in the DSM module with the Secret you defined before.
 
 ### SecretStore
 
@@ -31,14 +30,14 @@ To sync secrets between senhasegura and Kubernetes with External Secrets, we nee
 ### ClusterSecretStore
 
 ``` yaml
-{% include 'senhasegura-dsm-clustersecretstore.yaml' %}
+{% include 'segura-dsm-clustersecretstore.yaml' %}
 ```
 
 ---
 
 ## Syncing secrets
 
-In examples below, consider that three secrets (api-settings, db-settings and hsm-settings) are defined in senhasegura DSM
+In examples below, consider that three secrets (api-settings, db-settings and hsm-settings) are defined in Segura® DSM
 
 ---
 
@@ -80,14 +79,14 @@ HSM_PORT='9223'
 
 ### Sync DSM secrets using Secret Identifiers
 
-You can fetch all key/value pairs for a given secret identifier If you leave the remoteRef.property empty. This returns the json-encoded secret value for that path.
+You can fetch all key/value pairs for a given secret identifier if you leave the remoteRef.property empty. This returns the json-encoded secret value for that path.
 
 If you only need a specific key, you can select it using remoteRef.property as the key name.
 
 In this method, you can overwrites data name in Kubernetes Secret object (e.g API_SETTINGS and API_SETTINGS_TOKEN)
 
 ``` yaml
-{% include 'senhasegura-dsm-external-secret-single.yaml' %}
+{% include 'segura-dsm-external-secret-single.yaml' %}
 ```
 
 Kubernetes Secret will be create with follow `.data.X`
@@ -101,15 +100,15 @@ API_SETTINGS_TOKEN='example-token-value'
 
 ### Sync DSM secrets using Secret Identifiers with automatically name assignments
 
-If your app requires multiples secrets, it is not required to create multiple ExternalSecret resources, you can aggregate secrets using a single ExternalSecret resource
+If your app requires multiples secrets, it is not required to create multiple ExternalSecret resources, as you can aggregate secrets using a single ExternalSecret resource.
 
-In this method, every secret data in senhasegura creates an Kubernetes Secret `.data.X` field
+In this method, every secret data in Segura® creates a Kubernetes Secret `.data.X` field
 
 ``` yaml
-{% include 'senhasegura-dsm-external-secret-multiple.yaml' %}
+{% include 'segura-dsm-external-secret-multiple.yaml' %}
 ```
 
-Kubernetes Secret will be create with follow `.data.X`
+Kubernetes Secret will be created with the following `.data.X`
 
 ```bash
 URL='https://example.com/api/example'
@@ -127,7 +126,7 @@ DB_PASSWORD='example'
 You can sync all secrets that your authorization in DSM has using find, in a future release you will be able to filter secrets by name, path or tags
 
 ``` yaml
-{% include 'senhasegura-dsm-external-secret-all.yaml' %}
+{% include 'segura-dsm-external-secret-all.yaml' %}
 ```
 
 Kubernetes Secret will be create with follow `.data.X`
